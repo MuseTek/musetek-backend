@@ -4,8 +4,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import FileUploadParser
 from rest_framework.exceptions import ParseError
-
-from model import predict_tag
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from api.utils import get_tags
 
 class GetTags(APIView):
     """
@@ -22,6 +23,6 @@ class GetTags(APIView):
             raise ParseError("Empty content")
 
         f = request.data['file']
-        
-        print(f.__str__())
-        return Response(status=200, data={'tags': ['dark', 'roomy']})
+
+        tags = get_tags(f)
+        return Response(status=200, data={'file': f.__str__(), 'tags': tags})
