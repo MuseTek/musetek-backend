@@ -78,7 +78,7 @@ def get_tags(weights_file, dur, resample, mono,label_encoder_path, audio_file):
         exit(1)
     num_tags= 63
     expected_melgram_shape = model.layers[0].input_shape[1:]
-    pdb.set_trace()
+    # pdb.set_trace()
     #check if the file exists
     if os.path.isfile(audio_file):
         signal, sr = load_audio(audio_file,mono=mono,sr=resample)
@@ -100,7 +100,7 @@ def main(weights_file, dur, resample, mono,label_encoder_path,audio_path):
     # Load the model
     model, class_names = load_model_ext(weights_file)
     shomik_scores = get_shomik_scores(model)
-    pdb.set_trace()
+    # pdb.set_trace()
     if model is None:
         print("No weights file found.  Aborting")
         exit(1)

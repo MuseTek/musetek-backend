@@ -4,9 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import FileUploadParser
 from rest_framework.exceptions import ParseError
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
-from api.utils import get_tags
+from api.utils import get_tags_for_sample
 
 class GetTags(APIView):
     """
@@ -24,5 +22,5 @@ class GetTags(APIView):
 
         f = request.data['file']
 
-        tags = get_tags(f)
+        tags = get_tags_for_sample(f)
         return Response(status=200, data={'file': f.__str__(), 'tags': tags})

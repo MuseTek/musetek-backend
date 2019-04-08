@@ -1,25 +1,34 @@
 """
-function code between model and API
+    code for interaction between model and API
 """
 import os
 from django.core.files.storage import default_storage
 from django.core.files.storage import FileSystemStorage
 from django.core.files.base import ContentFile
 
-from model import predict_tag
+from model.predict_tag import get_tags
 
 
-def get_tags(sample):
+def get_tags_for_sample(sample):
     """
     takes in a sample and returns the associated tags
     """
+
+    # save file in uploaded_samples folder
     file_name = sample.__str__()
     fs = FileSystemStorage(location='uploaded_samples/')
-    file_path = fs.save(file_name, ContentFile(sample.read()))
+    actual_file_name = fs.save(file_name, ContentFile(sample.read()))
+    file_path = fs.path(actual_file_name)
 
-    print(file_name)
+    print(actual_file_name)
     print(file_path)
-    
-    return ['this', 'is', 'a', 'test']
+
+    # use model to get tags
+    tags = get_tags('model/weights.hdf5', 6, 44100, True, 'model/label_encoder.p', file_path)
+
+    # clean up
+    fs.delete(actual_file_name)
+
+    return tags
 
 
