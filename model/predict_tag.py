@@ -6,12 +6,12 @@ import numpy as np
 import librosa
 import os
 from os.path import isfile
-from panotti.models import *
-from panotti.datautils import *
+from .panotti.models import *
+from .panotti.datautils import *
 import pickle
 from sklearn import preprocessing
 from audioread import NoBackendError
-from panotti.metrics import shomik_tag_score
+from .panotti.metrics import shomik_tag_score
 import pdb
 def get_canonical_shape(signal):
     if len(signal.shape) == 1:
@@ -69,7 +69,7 @@ def predict_one(signal, sr, model, expected_melgram_shape):# class_names, model)
     #X = data['melgram']
     return model.predict(X,batch_size=1,verbose=False)[0]
 
-def get_tags(weights_file,dur, resample, mono,label_encoder_path, audio_file):
+def get_tags(weights_file, dur, resample, mono,label_encoder_path, audio_file):
     label_encoder = pickle.load(open(label_encoder_path,'rb'))
     #load model
     model, class_names = load_model_ext(weights_file)
@@ -88,7 +88,7 @@ def get_tags(weights_file,dur, resample, mono,label_encoder_path, audio_file):
     else:
         return None
 
-def main(weights_file,dur, resample, mono,label_encoder_path,audio_path):
+def main(weights_file, dur, resample, mono,label_encoder_path,audio_path):
     np.random.seed(1)
     #weights_file=args.weights
     #dur = args.dur

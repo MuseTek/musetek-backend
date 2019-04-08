@@ -5,6 +5,8 @@ from rest_framework.decorators import parser_classes
 from rest_framework.parsers import FileUploadParser
 from rest_framework.exceptions import ParseError
 
+from model import predict_tag
+
 class GetTags(APIView):
     """
     generate tags for the given sample
