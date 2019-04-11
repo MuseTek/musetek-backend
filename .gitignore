@@ -127,3 +127,6 @@ dmypy.json
 .vscode/
 
 *.DS_Store
+
+# Project Extra Files
+uploaded_samples/
