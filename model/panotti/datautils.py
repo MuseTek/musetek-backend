@@ -74,9 +74,8 @@ def save_melgram(outfile, melgram, out_format='npz'):
 def load_audio(audio_path, mono=None, sr=None, convertOSXaliases=True):  # wrapper for librosa.load
     try:
         signal, sr = librosa.load(audio_path, mono=mono, sr=sr)
-    except:
-        print("\n*** ERROR: Could not open audio file {}".format(audio_path),"\n",flush=True)
-        return
+    except Exception as e:
+        raise
 
     # except NoBackendError as e:
     #     if ('Darwin' == platform.system()):   # handle OS X alias files gracefully

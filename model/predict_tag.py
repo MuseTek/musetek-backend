@@ -81,7 +81,10 @@ def get_tags(weights_file, dur, resample, mono,label_encoder_path, audio_file):
     # pdb.set_trace()
     #check if the file exists
     if os.path.isfile(audio_file):
-        signal, sr = load_audio(audio_file,mono=mono,sr=resample)
+        try:
+            signal, sr = load_audio(audio_file,mono=mono,sr=resample)
+        except Exception as e:
+            raise
         y_proba = predict_one(signal,sr,model,expected_melgram_shape)
         answer = label_encoder.inverse_transform(np.argwhere(y_proba>.25))
         return answer.tolist()

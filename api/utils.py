@@ -24,10 +24,16 @@ def get_tags_for_sample(sample):
     print(file_path)
 
     # use model to get tags
-    tags = get_tags('model/weights.hdf5', 6, 44100, True, 'model/label_encoder.p', file_path)
+    try:
+        tags = get_tags('model/weights.hdf5', 6, 44100, True, 'model/label_encoder.p', file_path)
+    except Exception as e:
+        print(e)
+        tags = []
+    finally:
+        # clean up
+        fs.delete(actual_file_name)
 
-    # clean up
-    fs.delete(actual_file_name)
+    
 
     return tags
 
